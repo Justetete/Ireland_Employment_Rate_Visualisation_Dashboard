@@ -5,9 +5,8 @@
         "format": {"type": "csv"}
     },
     "transform": [
-        {"filter": "datum.Year = 2024"},
-        {"filter": {"field": "Statistic Label", "equal":"Employment Rate"}},
-        {"filter": {"field": "Statistic Label", "equal":"Unemployment Rate"}}
+        {"filter": "datum.Year == 2024"},
+        {"filter": {"field": "Statistic Label", "oneOf": ["Employment Rate", "Unemployment Rate"]}}
     ],
     "repeat": {"column": ["Age Group", "Education Attainment Level", "NUTS 2 Region"]},
     "spec":{
