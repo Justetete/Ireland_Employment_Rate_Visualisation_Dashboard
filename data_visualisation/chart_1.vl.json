@@ -9,6 +9,23 @@
         {"filter": {"field": "Statistic Label", "equal":"Employment Rate"}},
         {"filter": {"field": "Statistic Label", "equal":"Unemployment Rate"}}
     ],
-    "repeat": {"column": ["Age Group", "Education Attainment Level", "NUTS 2 Region"]}
+    "repeat": {"column": ["Age Group", "Education Attainment Level", "NUTS 2 Region"]},
+    "spec":{
+        "mark": "bar",
+        "encoding": {
+            "x": {
+                "field":{"repeat": "column"},
+                "type": "nominal"
+            },
+            "y": {
+                "field": "Value",
+                "type": "quantitative"
+            },
+            "color": {
+                "field": "Sex",
+                "type": "nominal"
+            }
+        }
+    }
 
 }
