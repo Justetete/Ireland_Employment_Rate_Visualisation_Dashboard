@@ -6,7 +6,7 @@
     },
     "transform": [
         {"filter": "datum.Year == 2024"},
-        {"filter": {"field": "Statistic Label", "oneOf": ["Employment Rate", "Unemployment Rate"]}}
+        {"filter": {"field": "Statistic Label", "equal": "Employment Rate"}}
     ],
     "repeat": {"column": ["Age Group", "Education Attainment Level", "NUTS 2 Region"]},
     "spec":{
@@ -17,12 +17,17 @@
                 "type": "nominal"
             },
             "y": {
-                "field": "Value",
-                "type": "quantitative"
+                "field": "VALUE",
+                "type": "quantitative",
+                "title": "Percentage (%)"
+            },
+            "xOffset": {
+                "field": "Statistic Label"
             },
             "color": {
-                "field": "Sex",
-                "type": "nominal"
+                "field": "Statistic Label",
+                "type": "nominal",
+                "title": "Metric"
             }
         }
     }
