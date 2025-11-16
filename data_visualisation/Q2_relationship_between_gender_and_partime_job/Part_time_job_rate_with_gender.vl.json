@@ -11,7 +11,7 @@
     ],
     "width": 600,
     "height": 400,
-    "title": "Percentage of part-time in different age group grouped by gender ",
+    "title": "Percentage of part-time in different age group grouped by gender in 2024 ",
     "mark": "bar",
     "encoding": {
         "x": {
