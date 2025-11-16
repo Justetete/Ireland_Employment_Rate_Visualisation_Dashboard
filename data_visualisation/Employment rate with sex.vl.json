@@ -1,0 +1,38 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRP9mr_HNIp8Zs5TttZybbpn1gGRxpD63t_qiiTIrz1FSpJby4rTZdWy1r1eUsYnFh4jn2haVCFxcUZ/pub?gid=741666015&single=true&output=csv",
+        "format": {"type": "csv"}
+    },
+    "transform": [
+        {"filter": "datum['NUTS 2 Region'] == 'Ireland'"},
+        {"filter": "datum['Education Attainment Level'] == 'Levels of Education (Levels  0-8)'"},
+        {"filter": "datum['Age Group'] == 'All ages'"},
+        {"filter": "datum['Sex'] != 'Both sexes'"}
+    ],
+    "width": 600,
+    "height": 300,
+    "title": " Employment Rate by Gender between 2019 to 2024",
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "Year",
+            "type": "nominal",
+            "title": "Year",
+            "axis": {"labelAngle":0}
+        },
+        "y": {
+            "field": "Annual employment rate",
+            "type": "quantitative",
+            "scale": {"domain": [0, 100]},
+            "axis": {"titleColor": "#1f77b4", "grid": false}
+        },
+        "color": {
+            "field": "Sex",
+            "type": "nominal",
+            "title": "Gender",
+            "scale": {"scheme": "category10"}
+        },
+        "xOffset": {"field": "Sex"}
+    }
+}
