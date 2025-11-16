@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 600,
+  "title": "Employment Rate by Region in Ireland",
+  "data": {
+    "url": "https://github.com/Justetete/COMP40610_Information_Visualisation_Assignment/blob/main/raw_datasets/external_data/NUTS2_Boundaries_Ungeneralised_-8101763786719061070.geojson",
+    "format": {"type": "json", "property": "features"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.NUTS2NAME",
+      "from": {
+        "data": {
+          "url": "https://github.com/Justetete/COMP40610_Information_Visualisation_Assignment/blob/main/data_cleaning/quarterly_employment_unemployment_rate.csv"
+        },
+        "key": "Region",
+        "fields": ["Employment_Rate", "Unemployment_Rate"]
+      }
+    }
+  ],
+  "projection": {"type": "mercator"},
+  "mark": "geoshape",
+  "encoding": {
+    "color": {
+      "field": "Employment_Rate",
+      "type": "quantitative",
+      "scale": {"scheme": "blues"},
+      "legend": {"title": "Employment Rate (%)"}
+    },
+    "tooltip": [
+      {"field": "properties.NUTS2NAME", "type": "nominal", "title": "Region"},
+      {"field": "Employment_Rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"},
+      {"field": "Unemployment_Rate", "type": "quantitative", "title": "Unemployment Rate (%)", "format": ".1f"}
+    ]
+  }
+}
