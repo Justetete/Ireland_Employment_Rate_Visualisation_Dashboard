@@ -1,0 +1,33 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/main/data_cleaning/quarterly_employment_unemployment_rate.csv",
+        "format": {"type": "csv"}
+    },
+    "transform": [
+        {"filter": "datum['Education Attainment Level'] == 'Levels of Education (Levels  0-8)'"},
+        {"filter": "datum['Age Group'] == 'All ages'"}
+    ],
+    "width": 600,
+    "height": 400,
+    "title": "Employment and Unemployment Rate between 2019Q1 to 2025Q2",
+    "mark": "line",
+    "encoding": {
+        "x": {
+            "field": "Quarter",
+            "type": "ordinal",
+            "title": "Quarter"
+        },
+        "y": {
+            "field": "Employment_Rate",
+            "type": "quantitative",
+            "title": "Rate (%)",
+            "scale": {"domain": [0, 100]}
+        },
+        "color": {
+            "field": "Sex",
+            "type": "nominal",
+            "legend": {"orient": "top-right"}
+        }
+    }
+}
