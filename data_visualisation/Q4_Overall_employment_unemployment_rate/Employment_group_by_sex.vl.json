@@ -22,7 +22,7 @@
             "field": "Employment_Rate",
             "type": "quantitative",
             "title": "Rate (%)",
-            "scale": {"domain": [0, 100]}
+            "scale": {"domain": [60, 100]}
         },
         "color": {
             "field": "Sex",
