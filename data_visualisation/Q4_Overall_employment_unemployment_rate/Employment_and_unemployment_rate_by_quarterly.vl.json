@@ -1,21 +1,17 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {
-        "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIhjhEct4hAD63LRDJIjrg3f1-5zRDrVimxjF-4v0EIEvoJ-ztE3sCp-xXVN1rUtqFfFFKxSjwgWVv/pub?gid=1442474291&single=true&output=csv",
+        "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/main/data_cleaning/quarterly_employment_unemployment_rate.csv",
         "format": {"type": "csv"}
     },
     "transform": [
-        {
-            "lookup": "Quarter",
-            "from": {
-                "data": {"url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSIhjhEct4hAD63LRDJIjrg3f1-5zRDrVimxjF-4v0EIEvoJ-ztE3sCp-xXVN1rUtqFfFFKxSjwgWVv/pub?gid=1254145210&single=true&output=csv"},
-                "key": "Quarter",
-                "fields": ["Annual unemployment rate"]
-            }
-        },
         {"filter": "datum['Education Attainment Level'] == 'Levels of Education (Levels  0-8)'"},
         {"filter": "datum['Age Group'] == 'All ages'"},
-        {"filter": "datum['Sex'] != 'Both sexes'"}
+        {"filter": "datum['Sex'] == 'Both sexes'"},
+        {
+            "fold": ["Employment_Rate", "Unemployment_Rate"],
+            "as": ["Rate_Type", "Rate_Value"]
+        }
     ],
     "width": 600,
     "height": 400,
@@ -28,10 +24,16 @@
             "title": "Quarter"
         },
         "y": {
-            "field": "Employment rate",
+            "field": "Rate_Value",
             "type": "quantitative",
             "title": "Rate (%)",
             "scale": {"domain": [0, 100]}
+        },
+        "color": {
+            "field": "Rate_Type",
+            "type": "nominal",
+            "title": "Rate Type",
+            "legend": {"orient": "top-right"}
         }
     }
 }
