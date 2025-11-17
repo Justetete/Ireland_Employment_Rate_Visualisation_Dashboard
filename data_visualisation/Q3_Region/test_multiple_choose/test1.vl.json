@@ -19,25 +19,28 @@
     }
   ],
   "data": {
-    "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/raw_datasets/external_data/NUTS2_Boundaries_Generalised_100m_-8084823292468818295.geojson",
-    "format": {
-      "type": "json",
-      "property": "features"
-    }
+    "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/yearly_regional_data/employment_rate_all_years.csv"
   },
   "transform": [
     {
-      "lookup": "properties.NUTS2NAME",
+      "filter": "datum.year == year_select"
+    },
+    {
+      "lookup": "region",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/yearly_regional_data/employment_rate_all_years.csv"
+          "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/raw_datasets/external_data/NUTS2_Boundaries_Generalised_100m_-8084823292468818295.geojson",
+          "format": {
+            "type": "json",
+            "property": "features"
+          }
         },
-        "key": "region",
-        "fields": ["year", "employment_rate"]
+        "key": "properties.NUTS2NAME",
+        "fields": ["type", "properties", "geometry"]
       }
     },
     {
-      "filter": "datum.year == year_select"
+      "filter": "datum.type != null"
     }
   ],
   "projection": {
@@ -64,8 +67,9 @@
       }
     },
     "tooltip": [
-      {"field": "properties.NUTS2NAME", "type": "nominal", "title": "Region"},
-      {"field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"}
+      {"field": "region", "type": "nominal", "title": "Region"},
+      {"field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"},
+      {"field": "year", "type": "quantitative", "title": "Year"}
     ]
   }
 }
