@@ -103,6 +103,38 @@
                             "value": "black"
                         }
                     }
+                },
+                {
+                    "data": {
+                        "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/annual_employment_rate_cleaned.csv"
+                    },
+                    "transform": [
+                        {"filter": "datum.Year == year_select"},
+                        {"filter": "datum['NUTS 2 Region'] == 'Ireland'"},
+                        {"filter": "datum['Age Group'] == 'All ages'"},
+                        {"filter": "datum['Sex'] != 'Both sexes'"}
+                    ],
+                    "mark": {
+                        "type": "rule",
+                        "strokeWidth": 2,
+                        "strokeDash": [5, 5],
+                        "opacity":0.8
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "employment_rate",
+                            "type": "quantitative"
+                        },
+                        "color": {
+                            "field": "Sex",
+                            "type": "nominal",
+                            "scale": {
+                                "domain": ["Female", "Male"],
+                                "range": ["#7B52AE", "#94C773"]
+                            },
+                            "legend": null
+                        }
+                    }
                 }
             ]
             },
