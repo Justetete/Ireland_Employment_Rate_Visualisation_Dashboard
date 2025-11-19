@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+</head>
+<body>
+    <div id="vis"></div>
+    <script type="text/javascript">
+        var spec = './dashboard.vl.json';
+        vegaEmbed('#vis',spec).then(function(result){
+            var view = result.view;
+        }).catch(function(error) {
+            console.error('Error embedding the visualisation:', error);
+        });
+    </script>
+</body>
+</html>
