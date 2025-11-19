@@ -1,0 +1,400 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Ireland Employment Rate Dashboard",
+    "fontSize": 24,
+    "anchor": "middle",
+    "fontWeight": "bold",
+    "offset": 20
+  },
+  "spacing": 30,
+  "params": [
+    {
+      "name": "year_select",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "max": 2024,
+        "min": 2019,
+        "step": 1,
+        "name": "Select Year: "
+      }
+    }
+  ],
+  "vconcat":[
+    {
+        "spacing": 20,
+        "hconcat": [
+            {
+            "width": 280,
+            "height": 700,
+            "title": {
+              "text": "Employment Rate by Age",
+              "fontSize": 16,
+              "fontWeight": "bold"
+            },
+            "data": {
+                "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/annual_employment_rate_cleaned.csv"
+            },
+            "transform": [
+                {"calculate": "datum['NUTS 2 Region']", "as": "region"},
+                {"filter": "datum.Year == year_select"},
+                {
+                    "filter": {
+                        "or": [
+                            {
+                                "and": [
+                                    {"param": "region_select", "empty": false},
+                                    {"param": "region_select"}
+                                ]
+                            },
+                            {
+                                "and": [
+                                    {"param": "region_select", "empty": true},
+                                    {"field": "region", "equal": "Ireland"}
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {"filter": "datum['Age Group'] != 'All ages'"},
+                {"filter": "datum['Sex'] != 'Both sexes'"}
+            ],
+            
+            "layer":[
+                {
+                    "params": [
+                        {
+                            "name": "sex_select",
+                            "select": {
+                                "type": "point",
+                                "fields": ["Sex"],
+                                "toggle": true
+                            },
+                            "bind": "legend"
+                        }
+                    ],
+                    "mark": "bar",
+                    "encoding": {
+                        "y": {
+                        "field": "Age Group",
+                        "type": "nominal",
+                        "title": "Age Group",
+                        "sort": null
+                        },
+                        "x": {
+                        "field": "employment_rate",
+                        "type": "quantitative",
+                        "title": "Employment Rate (%)",
+                        "scale": {
+                            "domain": [35, 100],
+                            "clamp": true
+                        }
+                        },
+                        "yOffset": {
+                        "field": "Sex"
+                        },
+                        "color": {
+                            "field": "Sex",
+                            "type": "nominal",
+                            "title": "Gender",
+                            "scale": {
+                                "domain": ["Female", "Male"],
+                                "range": ["#7B52AE", "#94C773"]
+                            },
+                            "legend": {
+                                "orient": "none",
+                                "direction": "vertical",
+                                "legendX":300,
+                                "legendY":700
+                            }
+                        },
+                        "opacity": {
+                            "condition": {
+                                "param": "sex_select",
+                                "value": 1
+                            },
+                            "value": 0.2
+                        },
+                        "tooltip": [
+                        {"field": "Age Group", "type": "nominal", "title": "Age Group"},
+                        {"field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"},
+                        {"field": "Year", "type": "quantitative", "title": "Year"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 3
+                    },
+                    "encoding": {
+                        "y": {
+                            "field": "Age Group",
+                            "type": "nominal",
+                            "sort": null
+                        },
+                        "x": {
+                            "field": "employment_rate",
+                            "type": "quantitative",
+                            "scale": {
+                                "domain": [35, 100],
+                                "clamp": true
+                            }
+                        },
+                        "yOffset": {
+                            "field": "Sex"
+                        },
+                        "text": {
+                            "field": "employment_rate",
+                            "type": "quantitative",
+                            "format": ".1f"
+                        },
+                        "color": {
+                            "value": "black"
+                        },
+                        "opacity": {
+                            "condition": {
+                                "param": "sex_select",
+                                "value": 1
+                            },
+                            "value": 0.2
+                        }
+                    }
+                },
+                {
+                    "data": {
+                        "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/annual_employment_rate_cleaned.csv"
+                    },
+                    "transform": [
+                        {"calculate": "datum['NUTS 2 Region']", "as": "region"},
+                        {"filter": "datum.Year == year_select"},
+                        {
+                            "filter": {
+                                "or": [
+                                    {
+                                        "and": [
+                                            {"param": "region_select", "empty": false},
+                                            {"param": "region_select"}
+                                        ]
+                                    },
+                                    {
+                                        "and": [
+                                            {"param": "region_select", "empty": true},
+                                            {"field": "region", "equal": "Ireland"}
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {"filter": "datum['Age Group'] == 'All ages'"},
+                        {"filter": "datum['Sex'] != 'Both sexes'"}
+                    ],
+                    "mark": {
+                        "type": "rule",
+                        "strokeWidth": 2,
+                        "strokeDash": [5, 5]
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "employment_rate",
+                            "type": "quantitative"
+                        },
+                        "color": {
+                            "field": "Sex",
+                            "type": "nominal",
+                            "scale": {
+                                "domain": ["Female", "Male"],
+                                "range": ["#7B52AE", "#94C773"]
+                            },
+                            "legend": null
+                        },
+                        "opacity": {
+                            "condition": {
+                                "param": "sex_select",
+                                "value": 0.8
+                            },
+                            "value": 0.1
+                        }
+                    }
+                }
+            ]
+            },
+            {
+            "width": 520,
+            "height": 700,
+            "title": {
+              "text": "Employment Rate by Region",
+              "fontSize": 16,
+              "fontWeight": "bold"
+            },
+            "data": {
+                "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/annual_employment_rate_cleaned.csv"
+            },
+            "transform": [
+                {"filter": "datum.Year == year_select"},
+                {"filter": "datum['Age Group'] == 'All ages'"},
+                {
+                    "filter": {
+                        "or": [
+                            {
+                                "and": [
+                                    {"param": "sex_select", "empty": false},
+                                    {"param": "sex_select"}
+                                ]
+                            },
+                            {
+                                "and": [
+                                    {"param": "sex_select", "empty": true},
+                                    {"field": "Sex", "equal": "Both sexes"}
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {"calculate": "datum['NUTS 2 Region']", "as": "region"},
+                {"filter": "datum.region != 'Ireland'"},
+                {
+                "lookup": "region",
+                "from": {
+                    "data": {
+                    "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/raw_datasets/external_data/NUTS2_Boundaries_Generalised_100m_-8084823292468818295.geojson",
+                    "format": {
+                        "type": "json",
+                        "property": "features"
+                    }
+                    },
+                    "key": "properties.NUTS2NAME",
+                    "fields": ["type", "properties", "geometry"]
+                }
+                },
+                {
+                "filter": "datum.type != null"
+                }
+            ],
+            "projection": {
+                "type": "identity",
+                "reflectY": true
+            },
+            "params": [
+                {
+                    "name": "region_select",
+                    "select": {
+                        "type": "point",
+                        "fields": ["region"],
+                        "on": "click",
+                        "clear": "dblclick"
+                    }
+                }
+            ],
+            "mark": {
+                "type": "geoshape",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "cursor": "pointer"
+            },
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "param": "region_select",
+                        "field": "employment_rate",
+                        "type": "quantitative",
+                        "scale": {
+                            "domain": [70, 85]
+                        },
+                        "legend": {
+                            "title": "Rate (%)",
+                            "orient": "none",
+                            "format": ".1f",
+                            "direction": "vertical",
+                            "legendX": 10,
+                            "legendY": 20  
+                        }
+                    },
+                    "value": "lightgray"
+                },
+                "opacity": {
+                    "condition": {
+                        "param": "region_select",
+                        "value": 1
+                    },
+                    "value": 0.3
+                },
+                "tooltip": [
+                {"field": "region", "type": "nominal", "title": "Region"},
+                {"field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"},
+                {"field": "year", "type": "quantitative", "title": "Year"}
+                ]
+            }
+            }
+        ]
+    },
+    {
+        "width": 880,
+        "height": 200,
+        "data": {
+            "url": "https://raw.githubusercontent.com/Justetete/COMP40610_Information_Visualisation_Assignment/refs/heads/main/data_cleaning/quarterly_employment_rate_cleaned.csv",
+            "format": {"type": "csv"}
+        },
+        "transform": [
+            {"filter": "datum['Age Group'] == 'All ages'"},
+            {"filter": "datum['Sex'] != 'Both sexes'"}
+        ],
+        "title": {
+            "text": "Employment Rate between 2019Q1 to 2025Q2",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "align": "center",
+            "orient": "bottom"
+        },
+        
+        "mark": {
+            "type": "line",
+            "point": true
+        },
+        "encoding": {
+            "x": {
+                "field": "Quarter",
+                "type": "ordinal",
+                "title": "Quarter",
+                "axis": {
+                    "labelAngle": -45
+                }
+            },
+            "y": {
+                "field": "employment_rate",
+                "type": "quantitative",
+                "title": "Rate (%)",
+                "scale": {"domain": [55, 100]}
+            },
+            "color": {
+                "field": "Sex",
+                "type": "nominal",
+                "title": "Gender",
+                "scale": {
+                    "domain": ["Female", "Male"],
+                    "range": ["#7B52AE", "#94C773"]
+                },
+                "legend": null
+            },
+            "opacity": {
+                "condition": {
+                    "param": "sex_select",
+                    "value": 1
+                },
+                "value": 0.2
+            },
+            "tooltip": [
+                {
+                "field": "Quarter", "type": "ordinal", "title": "Quarter: "
+                },
+                {
+                "field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"
+                }
+            ]
+        }
+    }
+  ]
+}
