@@ -87,7 +87,7 @@
                         "type": "quantitative",
                         "title": "Employment Rate (%)",
                         "scale": {
-                            "domain": [35, 100],
+                            "domain": [0, 100],
                             "clamp": true
                         }
                         },
@@ -140,7 +140,7 @@
                             "field": "employment_rate",
                             "type": "quantitative",
                             "scale": {
-                                "domain": [35, 100],
+                                "domain": [0, 100],
                                 "clamp": true
                             }
                         },
@@ -325,7 +325,7 @@
                 "tooltip": [
                 {"field": "region", "type": "nominal", "title": "Region"},
                 {"field": "employment_rate", "type": "quantitative", "title": "Employment Rate (%)", "format": ".1f"},
-                {"field": "year", "type": "quantitative", "title": "Year"}
+                {"field": "Year", "type": "quantitative", "title": "Year"}
                 ]
             }
             }
@@ -343,7 +343,7 @@
             {"filter": "datum['Sex'] != 'Both sexes'"}
         ],
         "title": {
-            "text": "Employment Rate between 2019Q1 to 2025Q4",
+            "text": "Employment Rate between 2019Q1 to 2024Q4",
             "fontSize": 16,
             "fontWeight": "bold",
             "align": "center",
